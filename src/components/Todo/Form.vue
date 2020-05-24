@@ -1,7 +1,7 @@
 <template>
   <div>
     <form @submit.prevent="addTodo">
-      <input type="text" v-model="text" />
+      <input type="text" v-model="text" @submit="addTodo" />
       <button type="submit">submit</button>
     </form>
   </div>
@@ -15,9 +15,10 @@ export default class Todos extends Vue {
   text = '';
 
   addTodo() {
-    console.log(this.text);
-    todosModule.addTodo(this.text);
-    this.text = '';
+    if (this.text !== '') {
+      todosModule.addTodo(this.text);
+      this.text = '';
+    }
   }
 }
 </script>
