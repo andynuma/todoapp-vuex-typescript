@@ -53,6 +53,13 @@ class Todos extends VuexModule implements TodosState {
     this.todos = this.todos.filter((todo) => todo.id !== id);
   }
 
+  @Mutation
+  private COMPLETETODO(id: number) {
+    this.todos = this.todos.map((todo: Todo) =>
+      todo.id === id ? { ...todo, done: true } : todo
+    );
+  }
+
   @Action
   public addTodo(text: string) {
     this.ADDTODO(text);
@@ -61,6 +68,11 @@ class Todos extends VuexModule implements TodosState {
   @Action
   public deleteTodo(id: number) {
     this.DELETETODO(id);
+  }
+
+  @Action
+  public completeTodo(id: number) {
+    this.COMPLETETODO(id);
   }
 }
 

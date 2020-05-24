@@ -3,8 +3,8 @@
     <Form />
     <ul v-for="todo in getTodos" :key="todo.id">
       <li>
-        {{ todo.id + 1 }} : {{ todo.content }}
-        <button>edit</button>
+        <span :class="{done: todo.done}">{{ todo.id + 1 }} : {{ todo.content }}</span>
+        <button @click="completeTodo(todo.id)">done</button>
         <button @click="deleteTodo(todo.id)">x</button>
       </li>
     </ul>
@@ -12,14 +12,14 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator';
-import { todosModule } from '@/store/modules/todos';
-import Form from '@/components/Todo/Form.vue';
+import { Vue, Component } from "vue-property-decorator";
+import { todosModule } from "@/store/modules/todos";
+import Form from "@/components/Todo/Form.vue";
 
 @Component({
   components: {
-    Form,
-  },
+    Form
+  }
 })
 export default class Todos extends Vue {
   get getTodos() {
@@ -29,11 +29,19 @@ export default class Todos extends Vue {
   deleteTodo(id: number) {
     todosModule.deleteTodo(id);
   }
+
+  completeTodo(id: number) {
+    todosModule.completeTodo(id);
+  }
 }
 </script>
 
 <style scoped>
 ul {
   list-style: none;
+}
+
+li > span.done {
+  text-decoration: line-through;
 }
 </style>
